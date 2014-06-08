@@ -16,19 +16,31 @@ class WelcomeController < ApplicationController
 		  end 
 		  end 
 
-		pid="catalogId=P-mobi-84191878304-cat"
-		session[:catid] = request.remote_ip
-		ht.each { |key,value|
-		# if value==pid
-			@loc.push(key)
-			#the ip address corresponding to the product id now this needs to be passed either to the api we use
+		@url=request.url
+
+		session[:url] = @url
+		#parse url to get catid
+
+		catid="catalogId=P-mobi-84191878304-cat"
+		@current_user ||= session[:current_user_id] && User.find(session[:current_user_id])
+			@ip=request.remote_ip
+		session[:ip] = request.remote_ip
+
+		IpAddress.create(:ip => @ip,:catid => catid,:flag => 1)
+		IpAddress.create(:ip => "123.24.144.163",:catid => catid,:flag => 1)
+
+		 @ip_adresses = IpAddress.all
+
+		@ip_adresses.each { |address|
+		 if (address.catid==catid&&address.flag==1)
+			@loc.push(address.ip)
+			#the ip address cs urlorresponding to the product id now this needs to be passed either to the api we use
 			#or the site we use for geolocation
 
-		# end
+		 end
 		}
 
-		# puts loc
-		# render :partial =>'my_partial', :locals =>{:loc => loc}
+		
   end
 
 

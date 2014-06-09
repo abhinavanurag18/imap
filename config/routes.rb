@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get 'welcome/index'
   get 'welcome/show'
+  get 'welcome/list'
+  get 'welcome/tabclose'
   get 'ip_adress/index'
   get 'ip_adress/show'
   get 'ip_adress/create'

@@ -1,0 +1,18 @@
+class CreateCatalogs < ActiveRecord::Migration
+  def change
+    create_table :catalogs do |t|
+      t.varchar{128} :catalog_id
+      t.varchar{255} :category
+      t.text :description
+      t.text :url
+      t.varchar{32} :rating
+      t.varchar{255} :youtube_url
+      t.varchar{255} :created_by
+      t.timestamp :creation_date
+      t.varchar{255} :last_created_by
+      t.timestamp :last_updated
+
+      t.timestamps
+    end
+  end
+end

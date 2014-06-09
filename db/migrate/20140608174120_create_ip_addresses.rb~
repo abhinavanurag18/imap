@@ -4,6 +4,7 @@ class CreateIpAddresses < ActiveRecord::Migration
 
  		t.string :ip , :null=> false
       	t.string :catid
+      	t.integer :flag
       	t.timestamps
     end
   end

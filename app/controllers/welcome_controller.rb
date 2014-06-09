@@ -26,7 +26,7 @@ class WelcomeController < ApplicationController
 			@ip=request.remote_ip
 		session[:ip] = request.remote_ip
 
-		IpAddress.create(:ip => @ip,:catid => catid,:flag => 1)
+		# IpAddress.create(:ip => @ip,:catid => catid,:flag => 1)
 		IpAddress.create(:ip => "123.24.144.163",:catid => catid,:flag => 1)
 
 		 @ip_adresses = IpAddress.all
@@ -39,9 +39,26 @@ class WelcomeController < ApplicationController
 
 		 end
 		}
-
+		@list = IpAddress.all
 		
   end
+
+  def list
+  	@list = IpAddress.where(ip: session[:ip])
+  	# @lst = ("h"=>"hiii")
+  	if request.xhr?
+    	render :json => @list
+    end
+  end
+  def tabclose
+  	# write the logic to delete the appropriate record
+  	ip = request.remote_ip
+  	IpAddress.delete_all("ip = '127.0.0.1'")
+  	
+  	# tab.save
+  	# redirect_to welcome/index
+  end
+
 
 
 end

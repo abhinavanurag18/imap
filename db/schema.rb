@@ -11,7 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140608174120) do
+ActiveRecord::Schema.define(version: 20140609070531) do
+
+  create_table "catalogs", force: true do |t|
+    t.string   "catalog_id"
+    t.string   "category"
+    t.text     "description"
+    t.text     "url"
+    t.string   "rating"
+    t.string   "youtube_url"
+    t.string   "created_by"
+    t.datetime "creation_date"
+    t.string   "last_created_by"
+    t.datetime "last_updated"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "imap_dbs", force: true do |t|
     t.string   "ip"

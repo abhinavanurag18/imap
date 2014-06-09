@@ -3,6 +3,17 @@
 <!-- <h1>Hello, Rails!</h1>-->
 
 
+<!-- 
+DOCUMENTATION:- 
+Things done:-
+1. AJAX working.
+2. Event on tab close
+
+Things to do:-
+Parse the url(to be taken using document.URL) and send it to the controller.
+
+
+-->
 
  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -37,7 +48,42 @@
         
       }
       google.maps.event.addDomListener(window, 'load', initialize);
+      $(document).ready(function(e){
+      	alert(""+document.URL);
+      	var url = document.URL;
+      	$.ajax({
+      		url:'/welcome/list',
+      		// method:'POST',
+      		// data:({url:url}),
+      		datatype:'json',
+      		success:function(data){
+      			// dparse = $.parseJSON(data);
+      			alert("success"+data.length);
+      		},
+      		error:function(request,status,error){
+      			alert("error");
+      		}
+      	});
 
+      	wireUpEvents();
+      	$(window).unload(function(){
+      		// var ip = "<%= request.ip %>";
+      		// var url = "<%= request.url %>";
+
+      		// return "are u sue??"+ip+" "+url+"";
+      		alert("hii");
+      		$.ajax({
+      			url : '/welcome/tabclose',
+      			success:function(data){
+      				alert("data");
+      			},
+      			error:function(error){
+      				alert(error);
+      			}
+
+      		});
+      	});
+      });
     </script>
  
     
@@ -47,6 +93,12 @@
     <div id="map" style="height: 500px;"></div>
    <h1>IP: <%= request.ip %></h1>
    <h1>URL: <%= request.url %></h1>
-   
+   <h1>Listing ip</h1>
+	<ul id="ip_list">
+	<% @list.each do |c| %>
+	<li><%= c.ip %>
+	</li>
+	<% end %>
+	</ul>
 </body>
 </html>

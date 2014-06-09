@@ -49,39 +49,48 @@ Parse the url(to be taken using document.URL) and send it to the controller.
       }
       google.maps.event.addDomListener(window, 'load', initialize);
       $(document).ready(function(e){
-      	alert(""+document.URL);
-      	var url = document.URL;
+      	// alert(""+document.URL);
+
+      	var urlq = window.location.pathname;
+      	var ip_arr = ["hii"];
+      	//alert(urlq);
       	$.ajax({
       		url:'/welcome/list',
-      		// method:'POST',
-      		// data:({url:url}),
+      		method:'GET',
+      		data:({url:urlq}),
       		datatype:'json',
       		success:function(data){
-      			// dparse = $.parseJSON(data);
-      			alert("success"+data.length);
+      			// dparse = JSON.parse(data);
+      			var i,j;
+      			for(i in data){
+      				alert(data[i]['ip']);
+      			}
+      			// alert(data);
+
       		},
       		error:function(request,status,error){
-      			alert("error");
+      			alert(error);
       		}
       	});
 
-      	wireUpEvents();
+      	// alert(ip_arr[0]);
+      	// wireUpEvents();
       	$(window).unload(function(){
       		// var ip = "<%= request.ip %>";
       		// var url = "<%= request.url %>";
 
       		// return "are u sue??"+ip+" "+url+"";
-      		alert("hii");
-      		$.ajax({
-      			url : '/welcome/tabclose',
-      			success:function(data){
-      				alert("data");
-      			},
-      			error:function(error){
-      				alert(error);
-      			}
+      		// alert("hii");
+      		// $.ajax({
+      		// 	url : '/welcome/tabclose',
+      		// 	success:function(data){
+      		// 		alert("data");
+      		// 	},
+      		// 	error:function(error){
+      		// 		alert(error);
+      		// 	}
 
-      		});
+      		// });
       	});
       });
     </script>
@@ -100,5 +109,6 @@ Parse the url(to be taken using document.URL) and send it to the controller.
 	</li>
 	<% end %>
 	</ul>
+
 </body>
 </html>

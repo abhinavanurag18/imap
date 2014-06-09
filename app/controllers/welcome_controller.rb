@@ -20,6 +20,8 @@ class WelcomeController < ApplicationController
 
 		session[:url] = @url
 		#parse url to get catid
+		# catid=Catalog.find(:url)
+
 
 		catid="catalogId=P-mobi-84191878304-cat"
 		@current_user ||= session[:current_user_id] && User.find(session[:current_user_id])
@@ -27,7 +29,7 @@ class WelcomeController < ApplicationController
 		session[:ip] = request.remote_ip
 
 		# IpAddress.create(:ip => @ip,:catid => catid,:flag => 1)
-		IpAddress.create(:ip => "123.24.144.163",:catid => catid,:flag => 1)
+		# IpAddress.create(:ip => "123.24.144.163",:catid => catid,:flag => 1)
 
 		 @ip_adresses = IpAddress.all
 
@@ -44,16 +46,34 @@ class WelcomeController < ApplicationController
   end
 
   def list
-  	@list = IpAddress.where(ip: session[:ip])
+  	@urlq = params[:url]
+
+  	# @data = request.body.read
+   #  @data.each do |dataElement|
+   #    @urlq = dataElement['url']
+      
+   #  end
+  	@list = IpAddress.where(ip: session[:ip],catid: @urlq)
   	# @lst = ("h"=>"hiii")
+  	if @list.length==0
+		IpAddress.create(:ip => session[:ip],:catid => params[:url] ,:flag => 1)
+	end
+
+	@lst = IpAddress.where(catid: @urlq)
+
+
+	 # respond_to do |format|
+  #   format.html # show.html.erb
+  #   format.json  { render :json => @list.to_json }
+  # end
   	if request.xhr?
-    	render :json => @list
+    	render :json => @lst.to_json
     end
   end
   def tabclose
   	# write the logic to delete the appropriate record
   	ip = request.remote_ip
-  	IpAddress.delete_all("ip = '127.0.0.1'")
+  	IpAddress.delete_all("ip = ?",session[:ip])
   	
   	# tab.save
   	# redirect_to welcome/index

@@ -72,8 +72,8 @@ class WelcomeController < ApplicationController
   end
   def tabclose
   	# write the logic to delete the appropriate record
-  	ip = request.remote_ip
-  	IpAddress.delete_all("ip = ?",session[:ip])
+  	ipi = request.remote_ip
+  	IpAddress.delete_all(:ip => ipi )
   	
   	# tab.save
   	# redirect_to welcome/index

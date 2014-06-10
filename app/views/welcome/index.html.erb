@@ -75,23 +75,27 @@ Parse the url(to be taken using document.URL) and send it to the controller.
 
       	// alert(ip_arr[0]);
       	// wireUpEvents();
-      	$(window).unload(function(){
+      	window.onbeforeunload = function(){
       		// var ip = "<%= request.ip %>";
       		// var url = "<%= request.url %>";
 
       		// return "are u sue??"+ip+" "+url+"";
+      		// console.log("hello");
       		// alert("hii");
-      		// $.ajax({
-      		// 	url : '/welcome/tabclose',
-      		// 	success:function(data){
-      		// 		alert("data");
-      		// 	},
-      		// 	error:function(error){
-      		// 		alert(error);
-      		// 	}
+      		$.ajax({
+      			url : '/welcome/tabclose',
+      			success:function(data){
+      				// var ip = "<%= request.ip %>";
+		      		// var url = "<%= request.url %>";
 
-      		// });
-      	});
+		      		// return "are u sue??"+ip+" "+url+"";
+      			},
+      			error:function(error){
+      				alert(error);
+      			}
+
+      		});
+      	}
       });
     </script>
  

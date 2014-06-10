@@ -29,35 +29,47 @@ Parse the url(to be taken using document.URL) and send it to the controller.
     // <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyAR_6EezXheWNmpGyHZVA8Y26WHSRrjNT8"></script>
     // <script type="text/javascript" src="ipmapper.js"></script> -->
     <!--<script type="text/javascript" src="ip2.js"></script>-->
+    <%#= stylesheet_link_tab "base" %>
     <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" %>
     <%= javascript_include_tag "http://maps.google.com/maps/api/js?key=AIzaSyAR_6EezXheWNmpGyHZVA8Y26WHSRrjNT8" %>
     <%= javascript_include_tag 'application' %>
     <script type="text/javascript">
     	function initialize() {
+
         var mapOptions = {
           
           zoom: 5
         };
+        IPMapper.initializeMap("map");
+
         <% @loc.each do |c| %>
 
- 
-        IPMapper.initializeMap("map");
+ 		// alert("city");
+        IPMapper.addIPMarker("123.24.144.163");
         IPMapper.addIPMarker("<%= c %>");
         
         <% end %>
         
       }
-      google.maps.event.addDomListener(window, 'load', initialize);
+      // google.maps.event.addDomListener(window, 'load', initialize);
       $(document).ready(function(e){
       	// alert(""+document.URL);
-
+      	initialize();
+      	var ip = "<%= request.remote_ip %>";
+      	var city = IPMapper.getCity(ip);
+      	alert(city);
+      	$('.box').bind('mouseover',function(e){
+      		// alert("hi");
+      		$('.box').css("background-color","#ff0");
+      	});
       	var urlq = window.location.pathname;
+      	
       	var ip_arr = ["hii"];
       	//alert(urlq);
       	$.ajax({
       		url:'/welcome/list',
       		method:'GET',
-      		data:({url:urlq}),
+      		data:({url:urlq,city:city}),
       		datatype:'json',
       		success:function(data){
       			// dparse = JSON.parse(data);
@@ -103,16 +115,32 @@ Parse the url(to be taken using document.URL) and send it to the controller.
 </head>
 <body>
     
-    <div id="map" style="height: 500px;"></div>
-   <h1>IP: <%= request.ip %></h1>
-   <h1>URL: <%= request.url %></h1>
+    <!-- <div id="map" style="height: 500px;"></div> -->
+   <!-- <h1>IP: </h1>
+   <h1>URL: </h1>
+   <h1>CITY:</h1>
    <h1>Listing ip</h1>
 	<ul id="ip_list">
-	<% @list.each do |c| %>
-	<li><%= c.ip %>
+	<%# @list.each do |c| %>
+	<li><%#= c.ip %>
 	</li>
-	<% end %>
-	</ul>
+	<%# end %>
+	</ul> -->
+
+
+
+	<div class="box">
+
+	</div>
+
+	<div class="mapd">
+		<div id="map" style="height: 500px;"></div>
+	</div>
+
+
+
+
+
 
 </body>
 </html>

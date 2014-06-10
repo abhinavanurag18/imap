@@ -1,3 +1,4 @@
+
 class WelcomeController < ApplicationController
   def index
   	ht=Hash.new()
@@ -21,7 +22,7 @@ class WelcomeController < ApplicationController
 		session[:url] = @url
 		#parse url to get catid
 		# catid=Catalog.find(:url)
-
+		# @city=request.location.city
 
 		catid="catalogId=P-mobi-84191878304-cat"
 		@current_user ||= session[:current_user_id] && User.find(session[:current_user_id])
@@ -56,7 +57,7 @@ class WelcomeController < ApplicationController
   	@list = IpAddress.where(ip: session[:ip],catid: @urlq)
   	# @lst = ("h"=>"hiii")
   	if @list.length==0
-		IpAddress.create(:ip => session[:ip],:catid => params[:url] ,:flag => 1)
+		IpAddress.create(:ip => session[:ip],:catid => params[:url] ,:city => params[:city], :flag => 1)
 	end
 
 	@lst = IpAddress.where(catid: @urlq)

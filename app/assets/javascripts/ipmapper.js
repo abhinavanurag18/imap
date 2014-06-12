@@ -41,7 +41,8 @@ var IPMapper = {
 			IPMapper.addIPMarker(ipArray[i]);
 		}
 	},
-	addIPMarker: function(ip){
+	addIPMarker: function(ip,count){
+		// alert(count);
 		ipRegex = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
 		if($.trim(ip) != '' && ipRegex.test(ip)){ //validate IP Address format
 			var url = encodeURI(IPMapper.baseUrl + ip + "?callback=?"); //geocoding url
@@ -60,7 +61,7 @@ var IPMapper = {
 						map: IPMapper.map,
 						draggable: false,
 						position: latlng,
-						title: city,
+						title: count,
 						customInfo: city
 
 					});

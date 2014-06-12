@@ -67,8 +67,15 @@ class WelcomeController < ApplicationController
 	# 	# city_list.push(city => IpAddress.where(:city => city).count)
 	#  end
 
+	city_json = [];
 
 	city_hash = IpAddress.where(:catid => params[:url]).group(:city).count
+	city_hash.each do |c,count|
+		ips = IpAddress.select(:ip).find_by city: c
+		# ip = "hgf"
+		# city_json.push([c,count,ip])
+		city_json.push([c,count.to_s,ips.ip])
+	end 
 
 
 
@@ -77,7 +84,7 @@ class WelcomeController < ApplicationController
   #   format.json  { render :json => @list.to_json }
   # end
   	if request.xhr?
-    	render :json => city_hash.to_json
+    	render :json => city_json.to_json
     end
   end
   def tabclose

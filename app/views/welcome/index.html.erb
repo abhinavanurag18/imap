@@ -47,6 +47,7 @@ Parse the url(to be taken using document.URL) and send it to the controller.
         
         
       }
+
       // google.maps.event.addDomListener(window, 'load', initialize);
       $(document).ready(function(e){
       	// alert(""+document.URL);
@@ -65,10 +66,15 @@ Parse the url(to be taken using document.URL) and send it to the controller.
 				      			// dparse = JSON.parse(data);
 				      			var i,j;
 				      			for(i in data){
+				      				// alert(i+" "+data[i]);
+				      				IPMapper.addIPMarker("123.24.144.163",data[i][1]);
 				      				// for(j in data[i]){
-				      				// 	alert(data[i][j]);
+				      				// 	// alert(data[i][j]);
+				      					
+				      				// 	alert(i+" "+j+" "+data[i][j]);
+				      					
 				      				// }
-				      				alert(i+" "+data[i]);
+				      				// alert(i+" "+data[i]);
 				      				
 				      				// IPMapper.addIPMarker(data[i]['ip']);
 				      			}
@@ -84,10 +90,10 @@ Parse the url(to be taken using document.URL) and send it to the controller.
 		});
       	
       	// alert("6:"+cityi);
-      	$('.box').bind('mouseover',function(e){
-      		// alert("hi");
-      		$('.box').css("background-color","#ff0");
-      	});
+      	// $('.box').bind('mouseover',function(e){
+      	// 	// alert("hi");
+      	// 	$('.box').css("background-color","#ff0");
+      	// });
       	
       	// alert(ip_arr[0]);
       	// wireUpEvents();
@@ -116,6 +122,19 @@ Parse the url(to be taken using document.URL) and send it to the controller.
 
       		});
       	}
+
+
+      	// $('.box').hover(function(){
+      	// 	initialize();
+      	// 	$('.mapd').css("display","block");
+      	// },function(){
+      	// 	$('.mapd').css("display","none");
+      	// });
+      	
+
+
+
+
       });
     </script>
  
@@ -136,13 +155,13 @@ Parse the url(to be taken using document.URL) and send it to the controller.
 	</ul> -->
 
 
-
-	<!-- <div class="box">
-
-	</div> -->
-
-	<div class="mapd">
-		<div id="map" style="height: 500px;"></div>
+	<div class="content">
+		<div class="box">
+			<center>Map</center>
+		</div>
+		<div class="mapd">
+			<div id="map" style="height: 500px;"></div>
+		</div>
 	</div>
 
 

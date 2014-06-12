@@ -41,14 +41,10 @@ Parse the url(to be taken using document.URL) and send it to the controller.
           zoom: 5
         };
         IPMapper.initializeMap("map");
-
-        <% @loc.each do |c| %>
-
- 		// alert("city");
         IPMapper.addIPMarker("123.24.144.163");
-        IPMapper.addIPMarker("<%= c %>");
+
+
         
-        <% end %>
         
       }
       // google.maps.event.addDomListener(window, 'load', initialize);
@@ -56,35 +52,43 @@ Parse the url(to be taken using document.URL) and send it to the controller.
       	// alert(""+document.URL);
       	initialize();
       	var ip = "<%= request.remote_ip %>";
-      	var city = IPMapper.getCity(ip);
-      	alert(city);
+      	var cityd;
+      	var cityi = IPMapper.getCity("123.24.144.163",function(result) {
+		    // code that depends on 'result'
+		   				var urlq = window.location.pathname;
+				      	$.ajax({
+				      		url:'/welcome/list',
+				      		method:'GET',
+				      		data:({url:urlq,city:result}),
+				      		datatype:'json',
+				      		success:function(data){
+				      			// dparse = JSON.parse(data);
+				      			var i,j;
+				      			for(i in data){
+				      				// for(j in data[i]){
+				      				// 	alert(data[i][j]);
+				      				// }
+				      				alert(i+" "+data[i]);
+				      				
+				      				// IPMapper.addIPMarker(data[i]['ip']);
+				      			}
+				      			// alert(data);
+
+
+				      		},
+				      		error:function(request,status,error){
+				      			alert(error);
+				      		}
+				      	});
+
+		});
+      	
+      	// alert("6:"+cityi);
       	$('.box').bind('mouseover',function(e){
       		// alert("hi");
       		$('.box').css("background-color","#ff0");
       	});
-      	var urlq = window.location.pathname;
       	
-      	var ip_arr = ["hii"];
-      	//alert(urlq);
-      	$.ajax({
-      		url:'/welcome/list',
-      		method:'GET',
-      		data:({url:urlq,city:city}),
-      		datatype:'json',
-      		success:function(data){
-      			// dparse = JSON.parse(data);
-      			var i,j;
-      			for(i in data){
-      				alert(data[i]['ip']);
-      			}
-      			// alert(data);
-
-      		},
-      		error:function(request,status,error){
-      			alert(error);
-      		}
-      	});
-
       	// alert(ip_arr[0]);
       	// wireUpEvents();
       	window.onbeforeunload = function(){
@@ -94,8 +98,12 @@ Parse the url(to be taken using document.URL) and send it to the controller.
       		// return "are u sue??"+ip+" "+url+"";
       		// console.log("hello");
       		// alert("hii");
+      		var urlq = window.location.pathname;
       		$.ajax({
       			url : '/welcome/tabclose',
+      			method : 'GET',
+      			data : ({url:urlq}),
+      			datatype: 'JSON',
       			success:function(data){
       				// var ip = "<%= request.ip %>";
 		      		// var url = "<%= request.url %>";
@@ -129,9 +137,9 @@ Parse the url(to be taken using document.URL) and send it to the controller.
 
 
 
-	<div class="box">
+	<!-- <div class="box">
 
-	</div>
+	</div> -->
 
 	<div class="mapd">
 		<div id="map" style="height: 500px;"></div>

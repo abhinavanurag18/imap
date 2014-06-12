@@ -102,19 +102,28 @@ var IPMapper = {
 	logError: function(error){
 		if (typeof console == 'object') { console.error(error); }
 	},
-	getCity: function(ip){
+	getCity: function(ip,callback){
+		var city;
 		ipRegex = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
 		if($.trim(ip) != '' && ipRegex.test(ip)){ //validate IP Address format
+			
 			var url = encodeURI(IPMapper.baseUrl + ip + "?callback=?"); //geocoding url
+			
 			$.getJSON(url, function(data) { //get Geocoded JSONP data
 				if($.trim(data.latitude) != '' && data.latitude != '0' && !isNaN(data.latitude)){ //Geocoding successfull
 					
-					var city=data.city;
+					city=data.city;
+					// alert("4:"+city);
+					callback(city);
+					// alert(city);
 					// glob_city = data.city;
-					return city;
+					// return city;
 				}
 			});
 		}
+		// alert("5:"+city);
+		return city;
+
 	}
 }
 

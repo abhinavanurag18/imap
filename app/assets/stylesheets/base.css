@@ -37,6 +37,10 @@ body {
 	cursor: pointer;
 
 }
+.content {
+	position: relative;
+	margin-top: 50px;
+}
 .mapd {
 	position: relative;
 	float: right;

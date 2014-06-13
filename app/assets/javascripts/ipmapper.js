@@ -14,7 +14,8 @@ var IPMapper = {
 	mapTypeId: google.maps.MapTypeId.ROADMAP,
 	latlngbound: null,
 	infowindow: null,
-	baseUrl: "http://freegeoip.net/json/",
+	// baseUrl: "http://freegeoip.net/json/",
+	baseUrl : "http://www.telize.com/geoip/",
 	initializeMap: function(mapId){
 		IPMapper.latlngbound = new google.maps.LatLngBounds();
 		var latlng = new google.maps.LatLng(0, 0);
@@ -61,8 +62,11 @@ var IPMapper = {
 						map: IPMapper.map,
 						draggable: false,
 						position: latlng,
-						title: count,
-						customInfo: city
+						title: city,
+						customInfo: city,
+						icon : "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+count+"|F37020|000000"
+						// contentString : count
+
 
 					});
 					IPMapper.placeIPMarker(marker, latlng, contentString); //place Marker on Map

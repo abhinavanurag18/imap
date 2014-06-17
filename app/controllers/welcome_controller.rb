@@ -7,7 +7,7 @@ class WelcomeController < ApplicationController
   def list
   	#getting relative path of the catalogid from the front end 
   	@urlq = params[:url]
-
+  	session[:ip] = request.remote_ip
   	#getting the record from db to test if the ip+catid combination already exists  
   	lst = IpAddress.where(ip: session[:ip],catid: @urlq)
 
